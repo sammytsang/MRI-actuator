@@ -52,7 +52,7 @@ MOTOR_RPM    = 32.0           # motor / main-shaft speed
 GEAR_RATIO   = 2.5            # reduction ratio
 ROLLER_RPM   = MOTOR_RPM / GEAR_RATIO    # = 12.8 RPM
 ROLLER_RADIUS_MM = 6.0        # 12 mm diameter roller → 6 mm radius
-CATHETER_SPEED_MM_S = (2.0 * np.pi * (ROLLER_RADIUS_MM / 1000.0) * ROLLER_RPM / 60.0) * 1000.0
+CATHETER_SPEED_MM_S = 2.0 * np.pi * ROLLER_RADIUS_MM * ROLLER_RPM / 60.0
 # ≈ 8.04 mm/s
 
 MOTOR_OMEGA  = MOTOR_RPM  * 2.0 * np.pi / 60.0   # rad/s (motor gear)

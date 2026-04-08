@@ -57,6 +57,7 @@ OMEGA        = 2.0 * np.pi / CYCLE_TIME   # shaft angular velocity (rad/s)
 
 # Cam geometry
 AMPLITUDE    = 1.0           # normalised amplitude (visual units)
+PHYSICAL_AMPLITUDE_MM = 10.0 # physical cam amplitude in millimetres (from engineering report)
 N_PERIODS    = 2             # number of sine-wave periods per revolution
 
 # Piston angular positions (degrees → used for display and colour logic)
@@ -242,7 +243,7 @@ def update(frame):
     # ── Cam angle readout ─────────────────────────────────────────────────
     angle_text.set_text(
         f'Cam angle : {cam_deg:6.1f}°\n'
-        f'Amplitude : {AMPLITUDE*10:.0f} mm  (A)\n'
+        f'Amplitude : {PHYSICAL_AMPLITUDE_MM:.0f} mm  (A)\n'
         f'dh/dθ_max : {AMPLITUDE*N_PERIODS:.3f} m/rad'
     )
 
