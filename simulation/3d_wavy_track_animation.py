@@ -34,7 +34,7 @@ Visual elements
 
 Animation timing
 ----------------
-  CYCLE_TIME = 1.5 s per full revolution  (matches the notebook / Arduino code)
+  CYCLE_TIME = 4.5 s per full revolution  (slowed down for presentation clarity)
   FPS        = 60
   The animation loops continuously.
 
@@ -62,7 +62,7 @@ from mpl_toolkits.mplot3d import Axes3D          # noqa: F401 – registers proj
 # ---------------------------------------------------------------------------
 # Parameters
 # ---------------------------------------------------------------------------
-CYCLE_TIME  = 1.5          # seconds per full revolution
+CYCLE_TIME  = 4.5          # seconds per full revolution (slowed for presentation)
 FPS         = 60           # frames per second
 FRAMES      = int(FPS * CYCLE_TIME)   # frames for one full revolution (loop)
 
@@ -79,9 +79,12 @@ AMPLITUDE = 0.30 * PISTON_RADIUS   # ≈ 0.165 normalised units
 PHYSICAL_AMPLITUDE = 0.010          # 10 mm → max torque = 52 N × 2 × 0.010 = 1.04 N·m
 THRUST_FORCE       = 52.0           # Newtons (pneumatic force per chamber at 2 bar)
 
-# Piston travel limits (Z-axis, relative to cam neutral plane at Z = 0.5)
-PISTON_TOP    =  1.0   # top of the stroke / top of housing bore
-PISTON_BOTTOM = -0.05  # lowest position (at cam crest)
+# Piston travel limits (Z-axis)
+# Cam (wavy track) is at the TOP centered around CAM_CENTER_Z.
+# Piston rod bases are fixed at Z = 0.0; heads follow the cam surface from below.
+CAM_CENTER_Z  = 1.0    # neutral Z of the wavy cam surface (top of assembly)
+PISTON_TOP    =  1.0   # alias kept for housing-outline and shaft reference
+PISTON_BOTTOM =  0.0   # fixed Z of piston rod bases (bottom of assembly)
 
 # Cylinder angles around the shaft
 CYLINDER_ANGLES_DEG = [0, 120, 240]
@@ -106,10 +109,12 @@ def cam_z(piston_angle_rad, cam_angle_rad):
     whose angular position around the shaft is *piston_angle_rad*, when the
     cam has rotated by *cam_angle_rad*.
 
-    Uses a 2-period sine wave instead of a flat tilted plane:
-        h = A · sin(2·(ψ − θ))
+    The cam is centred at CAM_CENTER_Z (top of the assembly) and uses a
+    2-period sine wave:
+        h = CAM_CENTER_Z + A · sin(2·(ψ − θ))
+    Pistons push upward from below and their heads track this surface.
     """
-    return AMPLITUDE * np.sin(2.0 * (piston_angle_rad - cam_angle_rad))
+    return CAM_CENTER_Z + AMPLITUDE * np.sin(2.0 * (piston_angle_rad - cam_angle_rad))
 
 
 def instantaneous_torque(cam_angle_rad):
@@ -154,13 +159,14 @@ _Y_base = _R * np.sin(_T)
 def swashplate_mesh(cam_angle):
     """Return (X, Y, Z) arrays for the 2-period wavy cam at *cam_angle*.
 
-    Z scales with radius so the centre is flat and the wave amplitude grows
-    toward the outer edge (matching the physical barrel-cam geometry):
-        Z = A · (r / r_max) · sin(2·(T − cam_angle))
+    The cam sits at the top of the assembly (CAM_CENTER_Z).  Z scales with
+    radius so the centre is flat and the wave amplitude grows toward the outer
+    edge (matching the physical barrel-cam geometry):
+        Z = CAM_CENTER_Z + A · (r / r_max) · sin(2·(T − cam_angle))
     """
     X = _X_base
     Y = _Y_base
-    Z = AMPLITUDE * (_R / 0.75) * np.sin(2.0 * (_T - cam_angle))
+    Z = CAM_CENTER_Z + AMPLITUDE * (_R / 0.75) * np.sin(2.0 * (_T - cam_angle))
     return X, Y, Z
 
 
@@ -176,7 +182,7 @@ ax.set_facecolor('#16213e')
 
 ax.set_xlim([-1.0, 1.0])
 ax.set_ylim([-1.0, 1.0])
-ax.set_zlim([-0.4, 1.4])
+ax.set_zlim([-0.3, 1.4])
 ax.set_axis_off()
 ax.set_title(
     '3-D Axial Piston Motor — Wavy Track (2 Periods)  |  MRI Actuator\n'
@@ -191,18 +197,18 @@ ax.view_init(elev=22, azim=45)
 # Static decorations
 # ---------------------------------------------------------------------------
 
-# Housing / bore outline: a faint dashed circle at Z = PISTON_TOP
+# Housing / bore outline: a faint dashed circle at Z = PISTON_BOTTOM (base of pistons)
 _hx = np.cos(_theta) * (PISTON_RADIUS + HOUSING_OUTLINE_OFFSET)
 _hy = np.sin(_theta) * (PISTON_RADIUS + HOUSING_OUTLINE_OFFSET)
-_hz = np.full_like(_theta, PISTON_TOP)
+_hz = np.full_like(_theta, PISTON_BOTTOM)
 ax.plot(_hx, _hy, _hz, color='#444444', lw=1.0, linestyle='--', zorder=1)
 
-# Labels for each cylinder at the top (static)
+# Labels for each cylinder at the bottom (static)
 for i, label in enumerate(CYLINDER_LABELS):
     colour = COLOUR_MAP[label]
     lx = (PISTON_RADIUS + LABEL_OFFSET) * np.cos(angles_rad[i])
     ly = (PISTON_RADIUS + LABEL_OFFSET) * np.sin(angles_rad[i])
-    ax.text(lx, ly, PISTON_TOP + 0.15, label,
+    ax.text(lx, ly, PISTON_BOTTOM - 0.15, label,
             color=colour, fontsize=13, fontweight='bold',
             ha='center', va='center', zorder=10)
 
@@ -232,8 +238,8 @@ _physics_text = ax.text2D(
 # Animated objects
 # ---------------------------------------------------------------------------
 
-# Central shaft: static line from below cam to top housing plate
-ax.plot([0, 0], [0, 0], [-0.35, PISTON_TOP + 0.05],
+# Central shaft: static line from piston base up through the cam
+ax.plot([0, 0], [0, 0], [PISTON_BOTTOM - 0.05, CAM_CENTER_Z + AMPLITUDE + 0.05],
         color='#cccccc', lw=5, zorder=5, solid_capstyle='round')
 
 # Wavy cam surface (re-drawn each frame via plot_surface)
@@ -244,12 +250,13 @@ HEAD_HEIGHT = 0.18   # Z-height of the thick piston head block
 ROD_LENGTH  = 0.60   # length of the thin push-arm rod
 
 # Piston Heads (thick, color-coded block — lights up when pressurised)
+# Initialised touching the cam from below; updated every frame.
 head_lines = []
 for i in range(3):
     line, = ax.plot(
         [px[i], px[i]],
         [py[i], py[i]],
-        [0.5 + ROD_LENGTH, 0.5 + ROD_LENGTH + HEAD_HEIGHT],
+        [CAM_CENTER_Z - HEAD_HEIGHT, CAM_CENTER_Z],
         lw=14,
         color=COLOUR_MAP[CYLINDER_LABELS[i]],
         solid_capstyle='round',
@@ -257,13 +264,13 @@ for i in range(3):
     )
     head_lines.append(line)
 
-# Push-Arm Rods (thin, rigid gray arm connecting head to cam shoe)
+# Push-Arm Rods: thin gray arm from piston base (Z = 0) up to piston head bottom
 rod_lines = []
 for i in range(3):
     line, = ax.plot(
         [px[i], px[i]],
         [py[i], py[i]],
-        [0.5, 0.5 + ROD_LENGTH],
+        [PISTON_BOTTOM, CAM_CENTER_Z - HEAD_HEIGHT],
         lw=4,
         color='#888888',
         solid_capstyle='butt',
@@ -294,18 +301,18 @@ def update(frame):
     # ── Pistons ───────────────────────────────────────────────────────────
     active_labels = []
     for i, label in enumerate(CYLINDER_LABELS):
-        # Z of the cam surface under this piston (shoe / rod bottom)
-        pz_bottom = cam_z(angles_rad[i], cam_angle)
-        pz_rod_top = pz_bottom + ROD_LENGTH     # rod top = head bottom
-        pz_head_top = pz_rod_top + HEAD_HEIGHT  # head top
+        # Z of the cam surface under this piston (head top tracks cam from below)
+        pz_head_top    = cam_z(angles_rad[i], cam_angle)
+        pz_head_bottom = pz_head_top - HEAD_HEIGHT   # head bottom = rod top
+        pz_rod_bottom  = PISTON_BOTTOM               # rod base fixed at Z = 0
 
-        # Update push-arm rod (always gray, thin rigid arm)
+        # Update push-arm rod (from fixed base up to piston head bottom)
         rod_lines[i].set_data([px[i], px[i]], [py[i], py[i]])
-        rod_lines[i].set_3d_properties([pz_bottom, pz_rod_top])
+        rod_lines[i].set_3d_properties([pz_rod_bottom, pz_head_bottom])
 
-        # Update piston head (thick block, color-coded when pressurised)
+        # Update piston head (thick block touching cam from below)
         head_lines[i].set_data([px[i], px[i]], [py[i], py[i]])
-        head_lines[i].set_3d_properties([pz_rod_top, pz_head_top])
+        head_lines[i].set_3d_properties([pz_head_bottom, pz_head_top])
 
         # Colouring: bright cylinder colour when active, gray on exhaust
         if is_active(i, cam_angle):
