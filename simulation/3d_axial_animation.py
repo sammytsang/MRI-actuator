@@ -13,16 +13,16 @@ the pistons are pushed up and down, converting pneumatic pressure into torque.
 
 Visual elements
 ---------------
-* Central shaft     – black cylinder along the Z-axis
-* Swashplate / cam  – translucent cyan tilted disk that rotates
-* Piston rods       – thick lines, one per cylinder:
+* Central shaft       – black cylinder along the Z-axis
+* Swashplate / cam    – translucent cyan tilted disk that rotates
+* Piston Head         – thick short block at the top of each piston assembly:
     Blue  (cylinder A, 0°)
     Green (cylinder B, 120°)
     Red   (cylinder C, 240°)
-  When a piston is in its 120° "pushing" (pressurised) phase the line uses
-  the cylinder colour.  During the exhaust / return stroke it turns gray.
-* Piston caps       – small sphere at the bottom of each rod (cam-follower)
-* Housing outline   – faint circle showing the bore positions
+  Lights up in the cylinder colour when pressurised; turns gray on exhaust.
+* Push-Arm (Rod)      – thin, rigid gray arm (L_rod_main_1) connecting the
+  piston head down to the spinning swashplate shoe.
+* Housing outline     – faint circle showing the bore positions
 
 Animation timing
 ----------------
@@ -188,31 +188,37 @@ shaft_line, = ax.plot([0, 0], [0, 0], [-0.35, PISTON_TOP + 0.05],
 # Swashplate surface (will be re-drawn each frame via plot_surface)
 swash_surf = [None]   # mutable container so the callback can replace it
 
-# Piston rods (one Line3D per cylinder)
-piston_lines = []
+# Piston assembly geometry
+HEAD_HEIGHT = 0.18   # Z-height of the thick piston head block
+ROD_LENGTH  = 0.60   # length of the thin push-arm rod (L_rod_main_1)
+
+# Piston Heads (thick, color-coded block — lights up when pressurised)
+head_lines = []
 for i in range(3):
     line, = ax.plot(
         [px[i], px[i]],
         [py[i], py[i]],
-        [PISTON_TOP, 0.5],
-        lw=10,
+        [0.5 + ROD_LENGTH, 0.5 + ROD_LENGTH + HEAD_HEIGHT],
+        lw=14,
         color=COLOUR_MAP[CYLINDER_LABELS[i]],
         solid_capstyle='round',
         zorder=6
     )
-    piston_lines.append(line)
+    head_lines.append(line)
 
-# Cam-follower caps (small spheres at the bottom of each piston rod)
-cap_plots = []
+# Push-Arm Rods (thin, rigid gray arm connecting head to swashplate shoe)
+rod_lines = []
 for i in range(3):
-    cap, = ax.plot(
-        [px[i]], [py[i]], [0.5],
-        'o',
-        markersize=8,
-        color=COLOUR_MAP[CYLINDER_LABELS[i]],
-        zorder=7
+    line, = ax.plot(
+        [px[i], px[i]],
+        [py[i], py[i]],
+        [0.5, 0.5 + ROD_LENGTH],
+        lw=4,
+        color='#888888',
+        solid_capstyle='butt',
+        zorder=6
     )
-    cap_plots.append(cap)
+    rod_lines.append(line)
 
 
 # ---------------------------------------------------------------------------
@@ -237,26 +243,27 @@ def update(frame):
     # ── Pistons ───────────────────────────────────────────────────────────
     active_labels = []
     for i, label in enumerate(CYLINDER_LABELS):
-        # Z of the cam surface under this piston
-        pz = cam_z(angles_rad[i], cam_angle)
+        # Z of the cam surface under this piston (shoe / rod bottom)
+        pz_bottom = cam_z(angles_rad[i], cam_angle)
+        pz_rod_top = pz_bottom + ROD_LENGTH     # rod top = head bottom
+        pz_head_top = pz_rod_top + HEAD_HEIGHT  # head top
 
-        # Update rod: from housing top down to cam surface
-        piston_lines[i].set_data([px[i], px[i]], [py[i], py[i]])
-        piston_lines[i].set_3d_properties([PISTON_TOP, pz])
+        # Update push-arm rod (always gray, thin rigid arm)
+        rod_lines[i].set_data([px[i], px[i]], [py[i], py[i]])
+        rod_lines[i].set_3d_properties([pz_bottom, pz_rod_top])
 
-        # Update cap position
-        cap_plots[i].set_data([px[i]], [py[i]])
-        cap_plots[i].set_3d_properties([pz])
+        # Update piston head (thick block, color-coded when pressurised)
+        head_lines[i].set_data([px[i], px[i]], [py[i], py[i]])
+        head_lines[i].set_3d_properties([pz_rod_top, pz_head_top])
 
-        # Colouring
+        # Colouring: bright cylinder colour when active, gray on exhaust
         if is_active(i, cam_angle):
-            colour = COLOUR_MAP[label]
+            head_colour = COLOUR_MAP[label]
             active_labels.append(label)
         else:
-            colour = COLOUR_GRAY
+            head_colour = COLOUR_GRAY
 
-        piston_lines[i].set_color(colour)
-        cap_plots[i].set_color(colour)
+        head_lines[i].set_color(head_colour)
 
     # ── Phase text ────────────────────────────────────────────────────────
     if active_labels:
@@ -270,7 +277,7 @@ def update(frame):
     else:
         _phase_text.set_text('')
 
-    return piston_lines + cap_plots + [_phase_text]
+    return head_lines + rod_lines + [_phase_text]
 
 
 # ---------------------------------------------------------------------------
