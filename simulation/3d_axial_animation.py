@@ -75,14 +75,8 @@ PISTON_BOTTOM = -0.05  # lowest position (at cam crest)
 CYLINDER_ANGLES_DEG = [0, 120, 240]
 CYLINDER_LABELS     = ['A', 'B', 'C']
 
-# Colours: bright phase colour  |  exhaust phase colour
-COLOURS = {
-    'A': ('#2196F3', 'A'),   # blue
-    'B': ('#4CAF50', 'B'),   # green
-    'C': ('#F44336', 'C'),   # red
-}
-COLOUR_MAP   = {'A': '#2196F3', 'B': '#4CAF50', 'C': '#F44336'}
-COLOUR_GRAY  = '#aaaaaa'
+COLOUR_MAP   = {'A': '#2196F3', 'B': '#4CAF50', 'C': '#F44336'}   # blue / green / red
+COLOUR_GRAY  = '#aaaaaa'    # exhaust / return phase colour
 
 # Phase window per cylinder: each cylinder is "active" for 120° of shaft rotation
 PHASE_WINDOW = 2.0 * np.pi / 3.0   # 120° in radians
@@ -108,11 +102,17 @@ def is_active(piston_index, cam_angle_rad):
     return phase < PHASE_WINDOW
 
 
+# Swashplate mesh resolution and decoration offsets
+CAM_MESH_ANGULAR_RES   = 40    # angular segments around the swashplate disk
+CAM_MESH_RADIAL_RES    = 8     # radial rings on the swashplate disk
+HOUSING_OUTLINE_OFFSET = 0.10  # radial gap between piston circle and housing ring
+LABEL_OFFSET           = 0.20  # radial gap between piston circle and cylinder labels
+
 # ---------------------------------------------------------------------------
-# Swashplate mesh (computed once at cam_angle=0; rotated each frame)
+# Swashplate mesh (computed once at cam_angle=0; Z updated each frame)
 # ---------------------------------------------------------------------------
-_theta = np.linspace(0, 2.0 * np.pi, 40)
-_r     = np.linspace(0, 0.75, 8)
+_theta = np.linspace(0, 2.0 * np.pi, CAM_MESH_ANGULAR_RES)
+_r     = np.linspace(0, 0.75, CAM_MESH_RADIAL_RES)
 _T, _R = np.meshgrid(_theta, _r)
 _X_base = _R * np.cos(_T)
 _Y_base = _R * np.sin(_T)
@@ -154,16 +154,16 @@ ax.view_init(elev=22, azim=45)
 # ---------------------------------------------------------------------------
 
 # Housing / bore outline: a faint dashed circle at Z = PISTON_TOP
-_hx = np.cos(_theta) * (PISTON_RADIUS + 0.10)
-_hy = np.sin(_theta) * (PISTON_RADIUS + 0.10)
+_hx = np.cos(_theta) * (PISTON_RADIUS + HOUSING_OUTLINE_OFFSET)
+_hy = np.sin(_theta) * (PISTON_RADIUS + HOUSING_OUTLINE_OFFSET)
 _hz = np.full_like(_theta, PISTON_TOP)
 ax.plot(_hx, _hy, _hz, color='#444444', lw=1.0, linestyle='--', zorder=1)
 
 # Labels for each cylinder at the top (static)
 for i, label in enumerate(CYLINDER_LABELS):
     colour = COLOUR_MAP[label]
-    lx = (PISTON_RADIUS + 0.20) * np.cos(angles_rad[i])
-    ly = (PISTON_RADIUS + 0.20) * np.sin(angles_rad[i])
+    lx = (PISTON_RADIUS + LABEL_OFFSET) * np.cos(angles_rad[i])
+    ly = (PISTON_RADIUS + LABEL_OFFSET) * np.sin(angles_rad[i])
     ax.text(lx, ly, PISTON_TOP + 0.15, label,
             color=colour, fontsize=13, fontweight='bold',
             ha='center', va='center', zorder=10)
