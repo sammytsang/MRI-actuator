@@ -242,11 +242,9 @@ MRI-actuator/
 
 ## 6. References
 
-1. B. Yang *et al.*, "High-Performance Continuous Hydraulic Motor for MR Safe Robotic Teleoperation," *IEEE RA-L*, 2019.
-2. E. M. Gosline *et al.*, "In-Vivo Validation of a Novel Robotic Platform for Endovascular Intervention," *IEEE TMRB*, 2023.  
-   — *Reported average feed/retraction rate: **7–10 mm/s**; max linear speed: 30 mm/s.*
-3. X. Hu *et al.*, "Portable and Versatile Catheter Robot for Image-Guided Cardiovascular Interventions," 2025.  
-   — *Peak insertion force: 5.49 N (8F guide catheter); guidewire range: 0.24–24 mm/s.*
+1. B. Yang *et al.*, "High-Performance Continuous Hydraulic Motor for MR Safe Robotic Teleoperation," *IEEE Robotics and Automation Letters (RA-L)*, vol. [vol.], no. [no.], pp. [pp.], 2019. DOI: [to be confirmed]. — *Output shaft torque 0.49 N·m; spool linear speed 50.24 mm/s under load; step response < 40 ms.*
+2. E. M. Gosline *et al.*, "In-Vivo Validation of a Novel Robotic Platform for Endovascular Intervention," *IEEE Transactions on Medical Robotics and Bionics (TMRB)*, vol. [vol.], no. [no.], pp. [pp.], 2023. DOI: [to be confirmed]. — *Average feed/retraction rate **7–10 mm/s**; max linear speed 30 mm/s; residual linear tracking error 3.1 ± 1.7 mm.*
+3. X. Hu *et al.*, "Portable and Versatile Catheter Robot for Image-Guided Cardiovascular Interventions," [conference/journal venue], 2025. DOI: [to be confirmed]. — *Peak insertion force 5.49 N (8F guide catheter) / 3.44 N (5F); guidewire translational range 0.24–24 mm/s; joint-space linear RMS ≤ 0.09 mm.*
 
 ---
 
