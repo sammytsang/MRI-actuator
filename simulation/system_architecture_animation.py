@@ -69,6 +69,10 @@ ARROW_COL    = '#90caf9'   # static connection arrows
 TEXT_COL     = '#e6edf3'
 PATIENT_COL  = '#ad1457'   # patient block
 
+# Hex alpha suffixes for semi-transparent overlays
+FILL_ALPHA   = '33'        # ~20 % opacity  — block fill
+ARROW_ALPHA  = '55'        # ~33 % opacity  — static arrow colour
+
 # MRI wall x-position
 WALL_X = 3.95
 
@@ -131,7 +135,7 @@ def draw_fancy_box(ax, name, colour, label, sublabel='', text_col=TEXT_COL):
         boxstyle='round,pad=0.07',
         linewidth=1.8,
         edgecolor=colour,
-        facecolor=colour + '33',   # semi-transparent fill
+        facecolor=colour + FILL_ALPHA,   # semi-transparent fill
         zorder=3
     )
     ax.add_patch(box)
@@ -183,7 +187,7 @@ patient_box = FancyBboxPatch(
     boxstyle='round,pad=0.07',
     linewidth=1.8,
     edgecolor=PATIENT_COL,
-    facecolor=PATIENT_COL + '33',
+    facecolor=PATIENT_COL + FILL_ALPHA,
     zorder=3
 )
 ax.add_patch(patient_box)
@@ -215,7 +219,7 @@ for src, dst in CONNECTIONS:
             '', xy=(WALL_X + 0.12, BLOCKS['tubes'][1]),
             xytext=(sx0, sy0),
             arrowprops=dict(
-                arrowstyle='->', color=ARROW_COL + '55',
+                arrowstyle='->', color=ARROW_COL + ARROW_ALPHA,
                 lw=1.2,
                 connectionstyle='arc3,rad=-0.35'
             ),
@@ -224,7 +228,7 @@ for src, dst in CONNECTIONS:
         continue
     arr = ax.annotate(
         '', xy=(x1, y1), xytext=(x0, y0),
-        arrowprops=dict(arrowstyle='->', color=ARROW_COL + '55', lw=1.2),
+        arrowprops=dict(arrowstyle='->', color=ARROW_COL + ARROW_ALPHA, lw=1.2),
         zorder=2
     )
     static_arrows[(src, dst)] = arr
