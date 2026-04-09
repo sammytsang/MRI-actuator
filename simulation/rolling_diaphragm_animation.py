@@ -39,7 +39,6 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import matplotlib.animation as animation
 from matplotlib.path import Path
-import matplotlib.patches as patches
 
 # ---------------------------------------------------------------------------
 # Geometry constants (all in arbitrary "drawing units")
@@ -217,7 +216,7 @@ ax.text(CYL_RIGHT + WALL_THICK + 0.08, DIAPHRAGM_WALL_Y,
 # ---------------------------------------------------------------------------
 
 # Air volume fill (polygon below piston head, above cylinder bottom)
-air_patch = patches.PathPatch(
+air_patch = mpatches.PathPatch(
     Path([(CYL_LEFT, CYL_BOTTOM), (CYL_RIGHT, CYL_BOTTOM),
           (CYL_RIGHT, 0.0),       (CYL_LEFT,  0.0)],
          [Path.MOVETO, Path.LINETO, Path.LINETO, Path.CLOSEPOLY]),
@@ -226,7 +225,7 @@ air_patch = patches.PathPatch(
 ax.add_patch(air_patch)
 
 # Diaphragm membrane
-diaphragm_patch = patches.PathPatch(
+diaphragm_patch = mpatches.PathPatch(
     diaphragm_path(PISTON_MID),
     facecolor=COL_DIAPHRAGM, edgecolor="#8B6914", linewidth=1.5,
     alpha=0.92, zorder=6,

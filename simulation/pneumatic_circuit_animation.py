@@ -331,11 +331,7 @@ def animate(frame: int):
     # ── Telemetry ──────────────────────────────────────────────────────────
     txt_angle.set_text(f"Phase Angle : {angle_deg:.0f}°")
     txt_valve.set_text(f"Active Valve : {VALVE_LABELS[active_idx]}")
-    txt_press.set_text(
-        f"Pressure     : 2.0 bar (ON)" if True else "0.0 bar"
-    )
-    # Show pressure only for active valve
-    active_name = VALVE_LABELS[active_idx]
+    txt_press.set_text(f"Pressure     : 2.0 bar (ON)  — Valve {VALVE_LABELS[active_idx]}")
     txt_valve.set_color(COL_AIR_ON)
     txt_press.set_color(COL_AIR_ON)
 
