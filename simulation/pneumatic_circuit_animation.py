@@ -106,7 +106,7 @@ INTERVAL  = int(1000 / FPS)
 # ---------------------------------------------------------------------------
 # Figure / axes
 # ---------------------------------------------------------------------------
-fig, ax = plt.subplots(figsize=(7, 9.5))
+fig, ax = plt.subplots(figsize=(9.5, 9.5))
 fig.patch.set_facecolor(COL_BG)
 ax.set_facecolor(COL_BG)
 ax.set_xlim(0.0, 5.2)
@@ -259,15 +259,16 @@ for i, cx in enumerate(CYL_CX):
 # ---------------------------------------------------------------------------
 tele_box = dict(facecolor="#FFFFFFCC", edgecolor="#AAAAAA",
                 boxstyle="round,pad=0.45")
-txt_angle = ax.text(0.08, 1.55, "Phase Angle : 0°",
-                    fontsize=12, color=COL_DARK, fontfamily="monospace",
-                    bbox=tele_box, zorder=10, transform=ax.transData)
-txt_valve = ax.text(0.08, 1.20, "Active Valve : A",
-                    fontsize=12, color=COL_AIR_ON, fontfamily="monospace",
-                    zorder=10, transform=ax.transData)
-txt_press = ax.text(0.08, 0.90, "Pressure     : 2.0 bar",
-                    fontsize=12, color=COL_AIR_ON, fontfamily="monospace",
-                    zorder=10, transform=ax.transData)
+txt_angle = ax.text(1.03, 0.60, "Phase Angle : 0°",
+                    fontsize=11, color=COL_DARK, fontfamily="monospace",
+                    bbox=tele_box, zorder=10, transform=ax.transAxes,
+                    clip_on=False)
+txt_valve = ax.text(1.03, 0.52, "Active Valve : A",
+                    fontsize=11, color=COL_AIR_ON, fontfamily="monospace",
+                    zorder=10, transform=ax.transAxes, clip_on=False)
+txt_press = ax.text(1.03, 0.45, "Pressure     : 2.0 bar",
+                    fontsize=11, color=COL_AIR_ON, fontfamily="monospace",
+                    zorder=10, transform=ax.transAxes, clip_on=False)
 
 # Small legend patches
 legend_elements = [
@@ -276,9 +277,9 @@ legend_elements = [
     Line2D([0], [0], color=COL_SIG_ON, lw=2, ls="--", label="Signal ON"),
     Line2D([0], [0], color=COL_SIG_OFF, lw=1.5, ls="--", label="Signal OFF"),
 ]
-ax.legend(handles=legend_elements, loc="lower right",
-          fontsize=11.0, framealpha=0.85, edgecolor="#AAAAAA",
-          bbox_to_anchor=(5.1, 0.82), bbox_transform=ax.transData)
+ax.legend(handles=legend_elements, loc="upper left",
+          fontsize=10, framealpha=0.85, edgecolor="#AAAAAA",
+          bbox_to_anchor=(1.03, 0.38), bbox_transform=ax.transAxes)
 
 
 # ---------------------------------------------------------------------------
@@ -349,5 +350,5 @@ ani = animation.FuncAnimation(
     blit=True,
 )
 
-plt.tight_layout()
+plt.subplots_adjust(left=0.04, right=0.67, top=0.94, bottom=0.02)
 plt.show()
