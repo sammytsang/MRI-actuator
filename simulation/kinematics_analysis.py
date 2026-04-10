@@ -46,7 +46,7 @@ fig.suptitle(
 )
 
 # ---------------------------------------------------------------------------
-# Subplot 1: Torque Ripple & 3-Phase Sequencing
+# Subplot 1: Torque Ripple & 3-Phase Sequencing (FIXED SWASHPLATE KINEMATICS)
 # ---------------------------------------------------------------------------
 # Angular domain
 theta_deg = np.linspace(0, 360, 1800)
@@ -60,26 +60,26 @@ PISTON_OFFSETS_DEG = [0, 120, 240]
 PISTON_LABELS = ["A", "B", "C"]
 PISTON_COLORS = ["#2196F3", "#4CAF50", "#F44336"]  # Blue, Green, Red
 
-# Cam track: h(θ) = 0.01 sin(2θ)  →  dh/dθ = 0.02 cos(2θ)
-# Piston i contacts the track at (θ − φᵢ), so:
-#   dh_i/dθ = 0.02 · cos(2(θ − φᵢ))
-# Torque contribution = F · dh_i/dθ  when piston i is in its 120° active
-# window, and 0 otherwise.
+# Swashplate kinematics: z = A * [1 - cos(theta - phi)]
+# Derivative (slope) dh/dtheta = A * sin(theta - phi)
+A_kinematic = 0.020  # Kinematic multiplier to achieve ~1.04 N.m peak
 
 torque_per_piston = []
 for phi_deg in PISTON_OFFSETS_DEG:
     phi_rad = np.deg2rad(phi_deg)
-    dh_dtheta = 0.02 * np.cos(2.0 * (theta_rad - phi_rad))
+    
+    # Torque = Force * dh/dtheta
+    dh_dtheta = A_kinematic * np.sin(theta_rad - phi_rad)
     torque_i = F_ACTIVE * dh_dtheta
 
-    # Active window: 120° starting at φ (wrapped on [0, 360))
+    # Active window: 180° power stroke (valves open for the full upward slope)
     angular_offset = (theta_deg - phi_deg) % 360.0
-    active_mask = angular_offset < 120.0
+    active_mask = angular_offset <= 180.0
     torque_per_piston.append(np.where(active_mask, torque_i, 0.0))
 
 total_torque = np.sum(torque_per_piston, axis=0)
 avg_torque = float(np.mean(total_torque))
-PEAK_TORQUE = 1.04  # N·m  (= 52 N × 0.02 m/rad, theoretical maximum)
+PEAK_TORQUE = float(np.max(total_torque))
 
 # Individual piston contributions (dashed)
 for torque_i, label, color in zip(torque_per_piston, PISTON_LABELS, PISTON_COLORS):
@@ -109,7 +109,7 @@ ax1.axhline(
     color="dimgray",
     linestyle="--",
     linewidth=1.3,
-    label=f"Average Torque ({avg_torque:.3f} N·m)",
+    label=f"Average Torque ({avg_torque:.2f} N·m)",
 )
 ax1.axhline(
     PEAK_TORQUE,
@@ -124,7 +124,7 @@ ax1.set_xticks(range(0, 361, 60))
 ax1.set_xlabel("Main Shaft Angle (degrees)", fontsize=11)
 ax1.set_ylabel("Torque (N·m)", fontsize=11)
 ax1.set_title("Torque Ripple & 3-Phase Sequencing", fontsize=12, fontweight="bold")
-ax1.legend(fontsize=9, loc="upper right")
+ax1.legend(fontsize=9, loc="lower right")
 ax1.grid(True, linestyle="--", alpha=0.45)
 
 # ---------------------------------------------------------------------------
