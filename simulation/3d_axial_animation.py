@@ -143,7 +143,7 @@ ax.set_axis_off()
 ax.set_title(
     '3-D Axial Piston Motor  —  Swashplate Concept\n'
     'Blue / Green / Red = pressurised phase   |   Gray = exhaust',
-    color='white', fontsize=11, pad=12
+    color='white', fontsize=14, pad=12
 )
 
 # Nice default viewing angle (isometric-ish)
@@ -165,14 +165,14 @@ for i, label in enumerate(CYLINDER_LABELS):
     lx = (PISTON_RADIUS + LABEL_OFFSET) * np.cos(angles_rad[i])
     ly = (PISTON_RADIUS + LABEL_OFFSET) * np.sin(angles_rad[i])
     ax.text(lx, ly, PISTON_TOP + 0.15, label,
-            color=colour, fontsize=13, fontweight='bold',
+            color=colour, fontsize=16, fontweight='bold',
             ha='center', va='center', zorder=10)
 
 # Phase / valve indicator text (bottom of the figure)
 _phase_text = ax.text2D(
     0.5, 0.02, '',
     transform=ax.transAxes,
-    color='white', fontsize=11, ha='center', va='bottom',
+    color='white', fontsize=14, ha='center', va='bottom',
     fontweight='bold'
 )
 

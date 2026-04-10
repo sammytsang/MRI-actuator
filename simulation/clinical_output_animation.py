@@ -170,7 +170,7 @@ ax.set_axis_off()
 ax.set_title(
     'Clinical Output Animation — MRI Pneumatic Motor  |  Catheter Drive System\n'
     'Motor (32 RPM)  →  2.5:1 Gearbox  →  Roller  →  Catheter (8 mm/s)',
-    color='white', fontsize=12, pad=10
+    color='white', fontsize=15, pad=10
 )
 
 # ---------------------------------------------------------------------------
@@ -197,22 +197,22 @@ ax.fill_between(
 
 # Vessel label
 ax.text(VESSEL_X_RIGHT - 0.05, 0.55, 'Blood Vessel',
-        color='#EF9A9A', ha='right', va='bottom', fontsize=9, style='italic')
+        color='#EF9A9A', ha='right', va='bottom', fontsize=12, style='italic')
 
 # Motor label
 ax.text(MOTOR_CENTER[0], MOTOR_CENTER[1] + MOTOR_RADIUS + 0.18,
         'Motor\n32 RPM', color='#90CAF9', ha='center', va='bottom',
-        fontsize=9, fontweight='bold')
+        fontsize=12, fontweight='bold')
 
 # Gearbox label
 ax.text(LARGE_CENTER[0], LARGE_CENTER[1] + LARGE_RADIUS + 0.18,
         'Reduction Gear\n2.5:1  →  12.8 RPM', color='#A5D6A7',
-        ha='center', va='bottom', fontsize=9, fontweight='bold')
+        ha='center', va='bottom', fontsize=12, fontweight='bold')
 
 # Roller label
 ax.text(LARGE_CENTER[0], LARGE_CENTER[1] - LARGE_RADIUS - 0.25,
         'Roller  (12 mm Ø)', color='#FFE082',
-        ha='center', va='top', fontsize=9, fontweight='bold')
+        ha='center', va='top', fontsize=12, fontweight='bold')
 
 # ---------------------------------------------------------------------------
 # Animated gear objects (filled polygons)
@@ -271,13 +271,13 @@ catheter_line, = ax.plot([], [], color=CATHETER_COLOUR,
 # Catheter tip arrow patch (updated each frame)
 catheter_tip_text = ax.text(
     0.0, CATHETER_Y + 0.50, '►',
-    color=CATHETER_COLOUR, ha='left', va='center', fontsize=14, zorder=8
+    color=CATHETER_COLOUR, ha='left', va='center', fontsize=17, zorder=8
 )
 
 # Catheter label
 catheter_label = ax.text(
     VESSEL_X_LEFT + 0.5, CATHETER_Y - 0.48,
-    'Catheter', color='#EF9A9A', ha='center', va='top', fontsize=9,
+    'Catheter', color='#EF9A9A', ha='center', va='top', fontsize=12,
     style='italic'
 )
 
@@ -287,7 +287,7 @@ catheter_label = ax.text(
 telemetry_text = ax.text(
     -2.90, -0.90,
     '',
-    color='white', ha='left', va='top', fontsize=9.5,
+    color='white', ha='left', va='top', fontsize=13.0,
     fontfamily='monospace',
     bbox=dict(boxstyle='round,pad=0.5', facecolor='#0d0d1a', alpha=0.85,
               edgecolor='#336688', linewidth=1.5),
@@ -408,7 +408,7 @@ legend_handles = [
 ]
 ax.legend(handles=legend_handles, loc='lower right',
           facecolor='#16213e', edgecolor='#555', labelcolor='white',
-          fontsize=8.5, framealpha=0.85)
+          fontsize=12.0, framealpha=0.85)
 
 # ---------------------------------------------------------------------------
 # Run

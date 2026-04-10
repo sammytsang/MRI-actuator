@@ -107,7 +107,7 @@ LIMIT_C = '#ff4444'   # safety limit dashed line
 fig.patch.set_facecolor(BG)
 for ax in (ax1, ax2, ax3):
     ax.set_facecolor(PANEL)
-    ax.tick_params(colors='#8b949e', labelsize=8)
+    ax.tick_params(colors='#8b949e', labelsize=11)
     ax.yaxis.label.set_color('#c9d1d9')
     ax.xaxis.label.set_color('#c9d1d9')
     for spine in ax.spines.values():
@@ -117,13 +117,13 @@ for ax in (ax1, ax2, ax3):
 fig.suptitle(
     'Clinical Safety & Force Response — MRI Robotic Catheter System\n'
     'Catheter advancing at 8 mm/s  |  Collision at T = 3.0 s  |  Emergency Stop',
-    color='#c9d1d9', fontsize=12, fontweight='bold', y=0.99
+    color='#c9d1d9', fontsize=15, fontweight='bold', y=0.99
 )
 
 # ── Subplot 1: Position ─────────────────────────────────────────────────────
 ax1.set_xlim(0, TOTAL_TIME)
 ax1.set_ylim(-1, CATHETER_SPEED_MM_S * COLLISION_TIME + 4)
-ax1.set_ylabel('Position (mm)', fontsize=9)
+ax1.set_ylabel('Position (mm)', fontsize=12)
 ax1.yaxis.set_label_coords(-0.075, 0.5)
 
 pos_line, = ax1.plot([], [], color=LINE1, lw=2.0, label='Catheter Position')
@@ -133,15 +133,15 @@ ax1.axvline(x=COLLISION_TIME, color='#ff4444', lw=1.2, linestyle=':', alpha=0.7)
 ax1.annotate(
     'Collision\nT = 3.0 s', xy=(COLLISION_TIME, CATHETER_SPEED_MM_S * COLLISION_TIME),
     xytext=(COLLISION_TIME + 0.4, CATHETER_SPEED_MM_S * COLLISION_TIME - 3),
-    color='#ff4444', fontsize=8,
+    color='#ff4444', fontsize=11,
     arrowprops=dict(arrowstyle='->', color='#ff4444', lw=1.2)
 )
 ax1.legend(loc='upper left', facecolor=PANEL, edgecolor=GRID_C,
-           labelcolor='#c9d1d9', fontsize=8, framealpha=0.9)
+           labelcolor='#c9d1d9', fontsize=11, framealpha=0.9)
 
 # ── Subplot 2: Contact Force ─────────────────────────────────────────────────
 ax2.set_ylim(-0.02, FORCE_LIMIT_N * 1.35)
-ax2.set_ylabel('Contact Force (N)', fontsize=9)
+ax2.set_ylabel('Contact Force (N)', fontsize=12)
 ax2.yaxis.set_label_coords(-0.075, 0.5)
 
 force_line, = ax2.plot([], [], color=LINE2, lw=2.0, label='Contact Force')
@@ -150,22 +150,22 @@ ax2.axhline(y=FORCE_LIMIT_N, color=LIMIT_C, lw=1.4, linestyle='--',
             label=f'Safety limit  {FORCE_LIMIT_N} N')
 ax2.axvline(x=COLLISION_TIME, color='#ff4444', lw=1.2, linestyle=':', alpha=0.7)
 ax2.text(TOTAL_TIME * 0.98, FORCE_LIMIT_N + 0.003, f'{FORCE_LIMIT_N} N limit',
-         color=LIMIT_C, ha='right', va='bottom', fontsize=8)
+         color=LIMIT_C, ha='right', va='bottom', fontsize=11)
 ax2.legend(loc='upper left', facecolor=PANEL, edgecolor=GRID_C,
-           labelcolor='#c9d1d9', fontsize=8, framealpha=0.9)
+           labelcolor='#c9d1d9', fontsize=11, framealpha=0.9)
 
 # ── Subplot 3: Motor Pressure ────────────────────────────────────────────────
 ax3.set_ylim(-0.15, RUNNING_PRESSURE * 1.4)
-ax3.set_ylabel('Motor Pressure (Bar)', fontsize=9)
-ax3.set_xlabel('Time (s)', fontsize=9)
+ax3.set_ylabel('Motor Pressure (Bar)', fontsize=12)
+ax3.set_xlabel('Time (s)', fontsize=12)
 ax3.yaxis.set_label_coords(-0.075, 0.5)
 
 pressure_line, = ax3.plot([], [], color=LINE3, lw=2.0, label='Motor Pressure')
 ax3.axvline(x=COLLISION_TIME, color='#ff4444', lw=1.2, linestyle=':', alpha=0.7)
 ax3.text(COLLISION_TIME + 0.05, RUNNING_PRESSURE * 0.9,
-         'Emergency\nExhaust', color='#ff4444', fontsize=8, va='top')
+         'Emergency\nExhaust', color='#ff4444', fontsize=11, va='top')
 ax3.legend(loc='upper left', facecolor=PANEL, edgecolor=GRID_C,
-           labelcolor='#c9d1d9', fontsize=8, framealpha=0.9)
+           labelcolor='#c9d1d9', fontsize=11, framealpha=0.9)
 
 # ── Flashing warning text (shown after collision) ────────────────────────────
 # Place it in figure-level coordinates so it spans all subplots
@@ -173,7 +173,7 @@ warning_text = fig.text(
     0.5, 0.50,
     'COLLISION DETECTED — EMERGENCY STOP',
     ha='center', va='center',
-    fontsize=17, fontweight='bold',
+    fontsize=21, fontweight='bold',
     color='red',
     alpha=0.0,          # hidden initially; made visible after collision
     zorder=20,

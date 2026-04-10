@@ -40,7 +40,7 @@ OUTPUT_PNG = os.path.join(SCRIPT_DIR, "poster_dashboard.png")
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 fig.suptitle(
     "MRI-Compatible Pneumatic Motor — Kinematics Analysis",
-    fontsize=15,
+    fontsize=18,
     fontweight="bold",
     y=1.01,
 )
@@ -121,10 +121,10 @@ ax1.axhline(
 
 ax1.set_xlim(0, 360)
 ax1.set_xticks(range(0, 361, 60))
-ax1.set_xlabel("Main Shaft Angle (degrees)", fontsize=11)
-ax1.set_ylabel("Torque (N·m)", fontsize=11)
-ax1.set_title("Torque Ripple & 3-Phase Sequencing", fontsize=12, fontweight="bold")
-ax1.legend(fontsize=9, loc="lower right")
+ax1.set_xlabel("Main Shaft Angle (degrees)", fontsize=14)
+ax1.set_ylabel("Torque (N·m)", fontsize=14)
+ax1.set_title("Torque Ripple & 3-Phase Sequencing", fontsize=15, fontweight="bold")
+ax1.legend(fontsize=12, loc="lower right")
 ax1.grid(True, linestyle="--", alpha=0.45)
 
 # ---------------------------------------------------------------------------
@@ -178,12 +178,12 @@ ax2.plot(
 )
 
 ax2.set_xlim(0.5, 3.5)
-ax2.set_xlabel("Supply Flow Rate (L/min)", fontsize=11)
-ax2.set_ylabel("Catheter Linear Speed (mm/s)", fontsize=11)
+ax2.set_xlabel("Supply Flow Rate (L/min)", fontsize=14)
+ax2.set_ylabel("Catheter Linear Speed (mm/s)", fontsize=14)
 ax2.set_title(
-    "Flow Rate vs. Catheter Advancement Speed", fontsize=12, fontweight="bold"
+    "Flow Rate vs. Catheter Advancement Speed", fontsize=15, fontweight="bold"
 )
-ax2.legend(fontsize=9, loc="upper left")
+ax2.legend(fontsize=12, loc="upper left")
 ax2.grid(True, linestyle="--", alpha=0.45)
 
 # ---------------------------------------------------------------------------

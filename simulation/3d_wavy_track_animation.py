@@ -187,7 +187,7 @@ ax.set_axis_off()
 ax.set_title(
     '3-D Axial Piston Motor — Wavy Track (2 Periods)  |  MRI Actuator\n'
     'Blue / Green / Red = pressurised (52 N)   |   Gray = exhaust',
-    color='white', fontsize=11, pad=12
+    color='white', fontsize=14, pad=12
 )
 
 # Nice default viewing angle (isometric-ish)
@@ -209,14 +209,14 @@ for i, label in enumerate(CYLINDER_LABELS):
     lx = (PISTON_RADIUS + LABEL_OFFSET) * np.cos(angles_rad[i])
     ly = (PISTON_RADIUS + LABEL_OFFSET) * np.sin(angles_rad[i])
     ax.text(lx, ly, PISTON_BOTTOM - 0.15, label,
-            color=colour, fontsize=13, fontweight='bold',
+            color=colour, fontsize=16, fontweight='bold',
             ha='center', va='center', zorder=10)
 
 # Phase / valve indicator text (bottom of the figure)
 _phase_text = ax.text2D(
     0.5, 0.02, '',
     transform=ax.transAxes,
-    color='white', fontsize=11, ha='center', va='bottom',
+    color='white', fontsize=14, ha='center', va='bottom',
     fontweight='bold'
 )
 
@@ -228,7 +228,7 @@ _CHAMBER_NAMES = {'A': 'A (Blue)', 'B': 'B (Green)', 'C': 'C (Red)'}
 _physics_text = ax.text2D(
     0.02, 0.97, '',
     transform=ax.transAxes,
-    color='white', fontsize=10, ha='left', va='top',
+    color='white', fontsize=13, ha='left', va='top',
     fontfamily='monospace',
     bbox=dict(boxstyle='round,pad=0.4', facecolor='#0d0d1a', alpha=0.75,
               edgecolor='#336688', linewidth=1.2)

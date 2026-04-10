@@ -122,18 +122,18 @@ ax.set_aspect('auto')
 ax.set_title(
     'Unwrapped Cam Track — Engineering View  |  MRI Pneumatic Motor\n'
     'Red = Active / Power Stroke (52 N)   ·   Gray = Exhaust / Return',
-    color='white', fontsize=12, pad=10
+    color='white', fontsize=15, pad=10
 )
-ax.set_xlabel('Cam circumference (rad)', color='#ccc', fontsize=10)
-ax.set_ylabel('Cam surface height (normalised)', color='#ccc', fontsize=10)
-ax.tick_params(colors='#aaa', labelsize=9)
+ax.set_xlabel('Cam circumference (rad)', color='#ccc', fontsize=13)
+ax.set_ylabel('Cam surface height (normalised)', color='#ccc', fontsize=13)
+ax.tick_params(colors='#aaa', labelsize=12)
 ax.grid(color='#333', linestyle='--', linewidth=0.5, alpha=0.7)
 
 # Custom x-tick labels in degrees
 _xticks = [0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi]
 _xlabels = ['0°', '90°', '180°', '270°', '360°']
 ax.set_xticks(_xticks)
-ax.set_xticklabels(_xlabels, color='#aaa', fontsize=9)
+ax.set_xticklabels(_xlabels, color='#aaa', fontsize=12)
 
 # ---------------------------------------------------------------------------
 # Static legend
@@ -144,7 +144,7 @@ legend_handles = [
     mpatches.Patch(color=COLOUR_EXHAUST,            label='Piston — Exhaust / Return (dh/dθ ≤ 0)'),
 ]
 ax.legend(handles=legend_handles, loc='upper right',
-          facecolor='#16213e', edgecolor='#555', labelcolor='white', fontsize=9)
+          facecolor='#16213e', edgecolor='#555', labelcolor='white', fontsize=12)
 
 # ---------------------------------------------------------------------------
 # Animated artists
@@ -185,14 +185,14 @@ for i, (phi_rad, label) in enumerate(zip(piston_angles_rad, PISTON_LABELS)):
 piston_label_texts = []
 for i, (phi_rad, label) in enumerate(zip(piston_angles_rad, PISTON_LABELS)):
     txt = ax.text(phi_rad, -AMPLITUDE * 2.2, label,
-                  color='#cccccc', ha='center', va='top', fontsize=8, zorder=7)
+                  color='#cccccc', ha='center', va='top', fontsize=11, zorder=7)
     piston_label_texts.append(txt)
 
 # ── Live cam-angle readout ─────────────────────────────────────────────────
 angle_text = ax.text(
     0.02, 0.97, '',
     transform=ax.transAxes,
-    color='white', fontsize=11, ha='left', va='top',
+    color='white', fontsize=14, ha='left', va='top',
     fontfamily='monospace',
     bbox=dict(boxstyle='round,pad=0.4', facecolor='#0d0d1a', alpha=0.80,
               edgecolor='#336688', linewidth=1.2),
