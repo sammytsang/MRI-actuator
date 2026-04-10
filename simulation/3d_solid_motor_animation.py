@@ -240,7 +240,7 @@ ax.set_axis_off()
 ax.set_title(
     'Solid 3D Axial Piston Motor — Wavy Track (2 Periods)  |  MRI Actuator\n'
     'Red = pushing (52 N thrust)   |   Light Blue = exhaust',
-    color='white', fontsize=11, pad=12,
+    color='white', fontsize=14, pad=12,
 )
 ax.view_init(elev=25, azim=45)
 
@@ -270,7 +270,7 @@ for i in range(3):
     lx = (PISTON_RADIUS_CIRCLE + 0.24) * np.cos(angles_rad[i])
     ly = (PISTON_RADIUS_CIRCLE + 0.24) * np.sin(angles_rad[i])
     ax.text(lx, ly, CHAMBER_BOTTOM - 0.13, CYLINDER_LABELS[i],
-            color=LABEL_COLOURS[i], fontsize=13, fontweight='bold',
+            color=LABEL_COLOURS[i], fontsize=16, fontweight='bold',
             ha='center', va='center', zorder=10)
 
 # Faint dashed base ring (housing footprint reference)
@@ -297,7 +297,7 @@ piston_surfs = [[None, None] for _ in range(3)]
 _telemetry = ax.text2D(
     0.02, 0.97, '',
     transform=ax.transAxes,
-    color='white', fontsize=10, ha='left', va='top',
+    color='white', fontsize=13, ha='left', va='top',
     fontfamily='monospace',
     bbox=dict(
         boxstyle='round,pad=0.4',
@@ -309,7 +309,7 @@ _telemetry = ax.text2D(
 _phase_text = ax.text2D(
     0.5, 0.02, '',
     transform=ax.transAxes,
-    color='white', fontsize=11, ha='center', va='bottom',
+    color='white', fontsize=14, ha='center', va='bottom',
     fontweight='bold',
 )
 

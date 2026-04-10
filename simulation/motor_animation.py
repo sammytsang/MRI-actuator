@@ -84,20 +84,20 @@ for ax in (ax_sine, ax_valve, ax_mech):
         spine.set_edgecolor('#444')
 
 fig.suptitle('3-Cylinder MRI-Compatible Pneumatic Motor — Simulation',
-             color='white', fontsize=14, fontweight='bold', y=0.98)
+             color='white', fontsize=17, fontweight='bold', y=0.98)
 
 # ── Panel 1: Piston-position sine waves ────────────────────────────────────
 for key in ('A', 'B', 'C'):
     ax_sine.plot(t, pos[key], color=COLOUR[key], lw=1.5,
                  label=f'Piston {key}  ({["0°","120°","240°"][ord(key)-65]})')
 
-ax_sine.set_ylabel('Displacement (norm.)', color='#ccc', fontsize=9)
-ax_sine.set_title('Mechanical Piston Motion', color='#ccc', fontsize=10)
-ax_sine.legend(loc='upper right', fontsize=8,
+ax_sine.set_ylabel('Displacement (norm.)', color='#ccc', fontsize=12)
+ax_sine.set_title('Mechanical Piston Motion', color='#ccc', fontsize=13)
+ax_sine.legend(loc='upper right', fontsize=11,
                facecolor='#16213e', edgecolor='#555', labelcolor='white')
 ax_sine.set_xlim(0, t[-1])
 ax_sine.set_ylim(-1.4, 1.4)
-ax_sine.tick_params(colors='#aaa', labelsize=8)
+ax_sine.tick_params(colors='#aaa', labelsize=11)
 ax_sine.set_xticklabels([])
 ax_sine.grid(color='#333', linestyle='--', linewidth=0.5)
 
@@ -111,15 +111,15 @@ for key in ('A', 'B', 'C'):
     ax_valve.axhline(offsets[key],       color=COLOUR[key], lw=0.5, alpha=0.3)
     ax_valve.axhline(offsets[key] + 1.0, color=COLOUR[key], lw=0.5, alpha=0.3)
     ax_valve.text(-0.04 * t[-1], offsets[key] + 0.5, f' V{key}',
-                  color=COLOUR[key], va='center', fontsize=8)
+                  color=COLOUR[key], va='center', fontsize=11)
 
-ax_valve.set_ylabel('Valve State', color='#ccc', fontsize=9)
-ax_valve.set_xlabel('Time (s)', color='#ccc', fontsize=9)
+ax_valve.set_ylabel('Valve State', color='#ccc', fontsize=12)
+ax_valve.set_xlabel('Time (s)', color='#ccc', fontsize=12)
 ax_valve.set_title('Solenoid Commutation Logic  ("A on → B, C off")',
-                   color='#ccc', fontsize=10)
+                   color='#ccc', fontsize=13)
 ax_valve.set_xlim(0, t[-1])
 ax_valve.set_ylim(-0.3, 3.5)
-ax_valve.tick_params(colors='#aaa', labelsize=8)
+ax_valve.tick_params(colors='#aaa', labelsize=11)
 ax_valve.set_yticks([])
 ax_valve.grid(color='#333', linestyle='--', linewidth=0.5)
 
@@ -129,7 +129,7 @@ cursor_valve, = ax_valve.plot([], [], color='white', lw=1.5, alpha=0.8)
 ax_mech.set_xlim(-2.2, 2.2)
 ax_mech.set_ylim(-2.2, 2.2)
 ax_mech.set_aspect('equal')
-ax_mech.set_title('2-D Mechanical Animation', color='#ccc', fontsize=10)
+ax_mech.set_title('2-D Mechanical Animation', color='#ccc', fontsize=13)
 ax_mech.tick_params(left=False, bottom=False,
                     labelleft=False, labelbottom=False)
 
@@ -202,7 +202,7 @@ for i, (angle_deg, label) in enumerate(zip(CYLINDER_ANGLE_DEG, CYLINDER_LABEL)):
     ly = np.sin(angle_rad) * 2.05
     txt = ax_mech.text(lx, ly, label,
                        color=COLOUR[label], ha='center', va='center',
-                       fontsize=11, fontweight='bold', zorder=6)
+                       fontsize=14, fontweight='bold', zorder=6)
     cyl_label_objs.append(txt)
 
 # Rotor arm (a line from centre that rotates)
@@ -210,7 +210,7 @@ rotor_arm, = ax_mech.plot([], [], color='white', lw=2.5, zorder=6)
 
 # Phase indicator text in the centre of the mechanical panel
 phase_text = ax_mech.text(0, -2.1, '', color='white',
-                          ha='center', va='bottom', fontsize=9)
+                          ha='center', va='bottom', fontsize=12)
 
 # ---------------------------------------------------------------------------
 # Animation update function

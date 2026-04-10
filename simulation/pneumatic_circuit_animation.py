@@ -117,7 +117,7 @@ ax.axis("off")
 ax.set_title(
     "Electro-Pneumatic Control Circuit\n"
     "MRI-Compatible Three-Chamber Pneumatic Motor",
-    fontsize=10.5, fontweight="bold", color=COL_DARK, pad=8,
+    fontsize=14.0, fontweight="bold", color=COL_DARK, pad=8,
 )
 
 
@@ -146,7 +146,7 @@ rounded_box(ARD_X + 0.50 * (SUPPLY_X1 - SUPPLY_X0),  # centre of layout
 ax.text(
     ARD_X + 0.50 * (SUPPLY_X1 - SUPPLY_X0), ARD_Y,
     "Arduino Controller",
-    ha="center", va="center", fontsize=9, color="white",
+    ha="center", va="center", fontsize=12, color="white",
     fontweight="bold", zorder=6,
 )
 
@@ -156,7 +156,7 @@ supply_line = ax.add_line(
            color=COL_SUPPLY_FILL, lw=5, solid_capstyle="round", zorder=3)
 )
 ax.text(SUPPLY_X0 - 0.22, SUPPLY_Y,
-        "2 bar\nSupply", ha="right", va="center", fontsize=7.5,
+        "2 bar\nSupply", ha="right", va="center", fontsize=11.0,
         color=COL_SUPPLY, fontweight="bold")
 
 # Arrow from supply line to show flow direction
@@ -210,7 +210,7 @@ for i, vx in enumerate(VALVE_CX):
                     fc=COL_VALVE_OFF, ec=COL_WALL, lw=1.5, zorder=5)
     valve_patches.append(p)
     t = ax.text(vx, VALVE_Y, f"Valve {VALVE_LABELS[i]}",
-                ha="center", va="center", fontsize=7.5,
+                ha="center", va="center", fontsize=11.0,
                 color="white", fontweight="bold", zorder=6)
     valve_labels.append(t)
 
@@ -249,7 +249,7 @@ for i, cx in enumerate(CYL_CX):
 
     # Label below cylinder
     t = ax.text(cx, CYL_BOT_Y - 0.25, f"Cyl {VALVE_LABELS[i]}",
-                ha="center", va="top", fontsize=8, color=COL_DARK,
+                ha="center", va="top", fontsize=11, color=COL_DARK,
                 fontweight="bold")
     cyl_texts.append(t)
 
@@ -260,13 +260,13 @@ for i, cx in enumerate(CYL_CX):
 tele_box = dict(facecolor="#FFFFFFCC", edgecolor="#AAAAAA",
                 boxstyle="round,pad=0.45")
 txt_angle = ax.text(0.08, 1.55, "Phase Angle : 0°",
-                    fontsize=9, color=COL_DARK, fontfamily="monospace",
+                    fontsize=12, color=COL_DARK, fontfamily="monospace",
                     bbox=tele_box, zorder=10, transform=ax.transData)
 txt_valve = ax.text(0.08, 1.20, "Active Valve : A",
-                    fontsize=9, color=COL_AIR_ON, fontfamily="monospace",
+                    fontsize=12, color=COL_AIR_ON, fontfamily="monospace",
                     zorder=10, transform=ax.transData)
 txt_press = ax.text(0.08, 0.90, "Pressure     : 2.0 bar",
-                    fontsize=9, color=COL_AIR_ON, fontfamily="monospace",
+                    fontsize=12, color=COL_AIR_ON, fontfamily="monospace",
                     zorder=10, transform=ax.transData)
 
 # Small legend patches
@@ -277,7 +277,7 @@ legend_elements = [
     Line2D([0], [0], color=COL_SIG_OFF, lw=1.5, ls="--", label="Signal OFF"),
 ]
 ax.legend(handles=legend_elements, loc="lower right",
-          fontsize=7.5, framealpha=0.85, edgecolor="#AAAAAA",
+          fontsize=11.0, framealpha=0.85, edgecolor="#AAAAAA",
           bbox_to_anchor=(5.1, 0.82), bbox_transform=ax.transData)
 
 

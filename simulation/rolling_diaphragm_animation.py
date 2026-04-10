@@ -170,7 +170,7 @@ ax.axis("off")
 ax.set_title(
     "Rolling Diaphragm Pneumatic Chamber\n"
     "MRI-Compatible Actuator — Internal Mechanics",
-    fontsize=11, fontweight="bold", color=COL_ANNOT, pad=10,
+    fontsize=14, fontweight="bold", color=COL_ANNOT, pad=10,
 )
 
 # ---------------------------------------------------------------------------
@@ -203,13 +203,13 @@ ax.annotate(
     zorder=10,
 )
 ax.text(0, CYL_BOTTOM - 0.9, "Air Supply\n(0 – 2 bar)", ha="center",
-        fontsize=7.5, color="#444444", zorder=10)
+        fontsize=11.0, color="#444444", zorder=10)
 
 # Wall clamp indicator (dashed line showing diaphragm attachment to wall)
 ax.axhline(DIAPHRAGM_WALL_Y, xmin=0.05, xmax=0.95,
            color="#888888", lw=0.8, ls="--", zorder=3)
 ax.text(CYL_RIGHT + WALL_THICK + 0.08, DIAPHRAGM_WALL_Y,
-        "Wall clamp", va="center", fontsize=7, color="#666666", zorder=10)
+        "Wall clamp", va="center", fontsize=10, color="#666666", zorder=10)
 
 # ---------------------------------------------------------------------------
 # Draw DYNAMIC elements (created once, updated in animate())
@@ -261,17 +261,17 @@ piston_line, = ax.plot(
 # ---------------------------------------------------------------------------
 txt_stroke = ax.text(
     -2.4, CYL_TOP + 0.3,
-    "Stroke: 0.00 mm", fontsize=8.5, color=COL_ANNOT,
+    "Stroke: 0.00 mm", fontsize=12.0, color=COL_ANNOT,
     fontfamily="monospace", zorder=10,
 )
 txt_force = ax.text(
     -2.4, CYL_TOP + 0.0,
-    "Force:  52.0 N",   fontsize=8.5, color=COL_ANNOT,
+    "Force:  52.0 N",   fontsize=12.0, color=COL_ANNOT,
     fontfamily="monospace", zorder=10,
 )
 txt_phase = ax.text(
     -2.4, CYL_TOP - 0.3,
-    "Phase:  PRESSURISED", fontsize=8.5, color=COL_AIR_PRESS,
+    "Phase:  PRESSURISED", fontsize=12.0, color=COL_AIR_PRESS,
     fontfamily="monospace", zorder=10,
 )
 
@@ -279,7 +279,7 @@ txt_phase = ax.text(
 ax.text(
     0, CYL_BOTTOM - 1.6,
     "Zero-Stiction Rolling Diaphragm\nfor 0.1 N fine force control",
-    ha="center", fontsize=8.5, style="italic", color=COL_ANNOT,
+    ha="center", fontsize=12.0, style="italic", color=COL_ANNOT,
     bbox=dict(facecolor="#FFFFFFBB", edgecolor="#AAAAAA", boxstyle="round,pad=0.4"),
     zorder=10,
 )
@@ -289,7 +289,7 @@ ax.annotate(
     "Rolling\nDiaphragm",
     xy=(CYL_RIGHT - 0.05, DIAPHRAGM_WALL_Y - 0.5),
     xytext=(CYL_RIGHT + 0.55, DIAPHRAGM_WALL_Y - 1.2),
-    fontsize=7.5, color="#6B4226",
+    fontsize=11.0, color="#6B4226",
     arrowprops=dict(arrowstyle="-|>", color="#6B4226", lw=1),
     zorder=10,
 )

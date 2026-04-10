@@ -134,14 +134,14 @@ ax.text(
     (0.25 + WALL_X - 0.30) / 2, AX_H - 0.35,
     "ZONE 1 — CONTROL ROOM  (Safe Zone)",
     ha="center", va="center",
-    color=ZONE_COL_C, fontsize=16, fontweight="bold",
+    color=ZONE_COL_C, fontsize=19, fontweight="bold",
     zorder=5
 )
 ax.text(
     (WALL_X + 0.30 + AX_W - 0.25) / 2, AX_H - 0.35,
     "ZONE 2 — MRI ROOM  (High Magnetic Field Zone)",
     ha="center", va="center",
-    color=ZONE_COL_M, fontsize=16, fontweight="bold",
+    color=ZONE_COL_M, fontsize=19, fontweight="bold",
     zorder=5
 )
 
@@ -164,7 +164,7 @@ ax.add_patch(wall_strip)
 ax.text(
     WALL_X, AX_H * 0.50, "MRI Shielding Wall",
     ha="center", va="center",
-    color=WALL_COL, fontsize=11, fontweight="bold",
+    color=WALL_COL, fontsize=14, fontweight="bold",
     rotation=90, zorder=5,
     bbox=dict(facecolor="white", edgecolor=WALL_COL,
               linewidth=1.5, boxstyle="round,pad=0.25", alpha=0.85)
@@ -194,7 +194,7 @@ def draw_block(name, fill, edge, title, subtitle="", subtitle2=""):
         cx(name), cy(name) + (0.18 if subtitle else 0.0),
         title,
         ha="center", va="center",
-        color=edge, fontsize=13, fontweight="bold",
+        color=edge, fontsize=16, fontweight="bold",
         zorder=4
     )
     if subtitle:
@@ -202,7 +202,7 @@ def draw_block(name, fill, edge, title, subtitle="", subtitle2=""):
             cx(name), cy(name) - 0.22,
             subtitle,
             ha="center", va="center",
-            color="#374151", fontsize=10.5,
+            color="#374151", fontsize=14.0,
             zorder=4
         )
     if subtitle2:
@@ -210,7 +210,7 @@ def draw_block(name, fill, edge, title, subtitle="", subtitle2=""):
             cx(name), cy(name) - 0.50,
             subtitle2,
             ha="center", va="center",
-            color="#374151", fontsize=9.5, fontstyle="italic",
+            color="#374151", fontsize=13.0, fontstyle="italic",
             zorder=4
         )
 
@@ -282,7 +282,7 @@ def draw_arrow(x0, y0, x1, y1, color, lw, linestyle, label, label_y_offset=0.35)
         ax.text(
             mid_x, mid_y, label,
             ha="center", va="bottom",
-            color=color, fontsize=10, fontweight="bold",
+            color=color, fontsize=13, fontweight="bold",
             zorder=6,
             bbox=dict(facecolor="white", edgecolor=color,
                       linewidth=1.0, boxstyle="round,pad=0.18", alpha=0.85)
@@ -367,7 +367,7 @@ for name, num in BLOCK_ORDER:
         left(name) + 0.14, top(name) - 0.14,
         num,
         ha="center", va="center",
-        color="white", fontsize=10, fontweight="bold",
+        color="white", fontsize=13, fontweight="bold",
         zorder=7,
         bbox=dict(facecolor=edge, edgecolor="none",
                   boxstyle="circle,pad=0.22")
@@ -390,13 +390,13 @@ ax.legend(
     handles=legend_handles,
     loc="lower center",
     ncol=3,
-    fontsize=11,
+    fontsize=14,
     facecolor="white",
     edgecolor="#d1d5db",
     framealpha=0.95,
     bbox_to_anchor=(0.5, -0.01),
     title="Legend",
-    title_fontsize=12,
+    title_fontsize=15,
 )
 
 # ---------------------------------------------------------------------------
@@ -404,7 +404,7 @@ ax.legend(
 # ---------------------------------------------------------------------------
 fig.suptitle(
     "MRI-Compatible Pneumatic Motor — System Architecture Pipeline",
-    fontsize=22, fontweight="bold",
+    fontsize=26, fontweight="bold",
     color=TITLE_COL, y=0.97,
 )
 

@@ -100,7 +100,7 @@ ax.set_axis_off()
 fig.suptitle(
     'MRI-Compatible Robotic Catheter System — Animated Signal & Pneumatic Pipeline\n'
     'Control Room  |  MRI Shielding Wall  |  MRI Room',
-    color=TEXT_COL, fontsize=12, fontweight='bold', y=0.99
+    color=TEXT_COL, fontsize=15, fontweight='bold', y=0.99
 )
 
 # ---------------------------------------------------------------------------
@@ -141,10 +141,10 @@ def draw_fancy_box(ax, name, colour, label, sublabel='', text_col=TEXT_COL):
     ax.add_patch(box)
     cx, cy, _, _ = BLOCKS[name]
     ax.text(cx, cy + 0.12, label, ha='center', va='center',
-            color=TEXT_COL, fontsize=8.5, fontweight='bold', zorder=4)
+            color=TEXT_COL, fontsize=12.0, fontweight='bold', zorder=4)
     if sublabel:
         ax.text(cx, cy - 0.18, sublabel, ha='center', va='center',
-                color=colour, fontsize=7.0, zorder=4)
+                color=colour, fontsize=10.0, zorder=4)
     return box
 
 
@@ -160,15 +160,15 @@ for xw in (WALL_X - 0.08, WALL_X + 0.08):
     ax.plot([xw, xw], [0.3, AX_H - 0.3],
             color='#bcaaa4', lw=1.0, linestyle='--', alpha=0.7, zorder=3)
 ax.text(WALL_X, AX_H - 0.15, 'MRI Shielding Wall', ha='center', va='top',
-        color='#bcaaa4', fontsize=8, style='italic', zorder=5)
+        color='#bcaaa4', fontsize=11, style='italic', zorder=5)
 
 # Room labels
 ax.text(WALL_X * 0.45, AX_H - 0.15, 'CONTROL ROOM',
         ha='center', va='top', color='#90caf9',
-        fontsize=9, fontweight='bold', zorder=5)
+        fontsize=12, fontweight='bold', zorder=5)
 ax.text((WALL_X + AX_W) * 0.55, AX_H - 0.15, 'MRI ROOM',
         ha='center', va='top', color='#a5d6a7',
-        fontsize=9, fontweight='bold', zorder=5)
+        fontsize=12, fontweight='bold', zorder=5)
 
 # ---------------------------------------------------------------------------
 # Draw static blocks
@@ -192,9 +192,9 @@ patient_box = FancyBboxPatch(
 )
 ax.add_patch(patient_box)
 ax.text(cx, cy + 0.12, 'Catheter', ha='center', va='center',
-        color=TEXT_COL, fontsize=8.5, fontweight='bold', zorder=4)
+        color=TEXT_COL, fontsize=12.0, fontweight='bold', zorder=4)
 ax.text(cx, cy - 0.18, 'in Patient\n8 mm/s', ha='center', va='center',
-        color=PATIENT_COL, fontsize=7.0, zorder=4)
+        color=PATIENT_COL, fontsize=10.0, zorder=4)
 
 # Joystick icon — simple cross
 jcx, jcy = block_centre('joystick')
@@ -286,7 +286,7 @@ for name in BLOCKS:
 step_text = ax.text(
     AX_W * 0.5, 0.55, '',
     ha='center', va='center', color='#e6edf3',
-    fontsize=9, fontstyle='italic',
+    fontsize=12, fontstyle='italic',
     bbox=dict(boxstyle='round,pad=0.3', facecolor='#21262d',
               edgecolor='#30363d', linewidth=1.2),
     zorder=10
@@ -440,7 +440,7 @@ legend_handles = [
 ]
 ax.legend(
     handles=legend_handles, loc='lower center',
-    ncol=3, fontsize=8,
+    ncol=3, fontsize=11,
     facecolor='#21262d', edgecolor='#30363d', labelcolor=TEXT_COL,
     framealpha=0.9, bbox_to_anchor=(0.5, 0.0)
 )
